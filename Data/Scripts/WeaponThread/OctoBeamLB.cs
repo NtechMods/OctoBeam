@@ -10,19 +10,19 @@ using static WeaponThread.Session;
 
 namespace WeaponThread
 {   // Don't edit above this line
-    partial class Weapons { WeaponDefinition BallLazerBeam => new WeaponDefinition {
+    partial class Weapons { WeaponDefinition OctoBeamLB => new WeaponDefinition {
     Assignments = new ModelAssignments
     {
         MountPoints = new[]
         {
-            MountPoint(subTypeId: "BallLazerBeamLB", aimPartId: "GazerBeamLenses", muzzlePartId: "GazerBeamLenses"),
+            MountPoint(subTypeId: "OctoBeamLB", aimPartId: "GazerBeamLenses", muzzlePartId: "GazerBeamLenses"),
         },
         Barrels = Names("muzzle_barrel_001", "muzzle_barrel_002", "muzzle_barrel_003", "muzzle_barrel_004", "muzzle_barrel_005", "muzzle_barrel_006", "muzzle_barrel_007", "muzzle_barrel_008"),
         EnableSubPartPhysics = false
     },
     HardPoint = new HardPointDefinition
     {
-        WeaponId = "BallLazerBeam", // name of weapon in terminal
+        WeaponId = "OctoBeamLB", // name of weapon in terminal
         AmmoMagazineId = "Blank",
         Block = AimControl(trackTargets: true, turretAttached: true, turretController: true, primaryTracking: true, rotateRate: 0.04f, elevateRate: 0.04f, minAzimuth: -180, maxAzimuth: 180, minElevation: -20, maxElevation: 80, offset: Vector(x: 0, y: 0, z: 0), fixedOffset: false, debug: false),
         DeviateShotAngle = 0f,
