@@ -27,11 +27,11 @@ namespace WeaponThread
         Block = AimControl(trackTargets: true, turretAttached: true, turretController: true, primaryTracking: true, rotateRate: 0.04f, elevateRate: 0.04f, minAzimuth: -180, maxAzimuth: 180, minElevation: -20, maxElevation: 80, offset: Vector(x: 0, y: 0, z: 0), fixedOffset: false, debug: false),
         DeviateShotAngle = 0f,
         AimingTolerance = 4f, // 0 - 180 firing angle
-        EnergyCost = 0.1f, //(((EnergyCost * DefaultDamage) * ShotsPerSecond) * BarrelsPerShot) * ShotsPerBarrel
-        RotateBarrelAxis = 0, // 0 = off, 1 = xAxis, 2 = yAxis, 3 = zAxis
+        EnergyCost = 0.001f, //(((EnergyCost * DefaultDamage) * ShotsPerSecond) * BarrelsPerShot) * ShotsPerBarrel
+        RotateBarrelAxis = 3, // 0 = off, 1 = xAxis, 2 = yAxis, 3 = zAxis
         AimLeadingPrediction = Advanced, // Off, Basic, Accurate, Advanced
         DelayCeaseFire = 0, // Measured in game ticks (6 = 100ms, 60 = 1 seconds, etc..).
-        GridWeaponCap = 0,// 0 = unlimited, the smallest weapon cap assigned to a subTypeId takes priority.
+        GridWeaponCap = 6,// 0 = unlimited, the smallest weapon cap assigned to a subTypeId takes priority.
         Ui = Display(rateOfFire: true, damageModifier: true, toggleGuidance: false, enableOverload: true),
 
         Loading = new AmmoLoading
@@ -79,7 +79,7 @@ namespace WeaponThread
     },
     Ammo = new AmmoDefinition
     {
-        BaseDamage = 100f,
+        BaseDamage = 8f,
         Mass = 0.1f, // in kilograms
         Health = 0, // 0 = disabled, otherwise how much damage it can take from other trajectiles before dying.
         BackKickForce = 0f,
@@ -89,7 +89,7 @@ namespace WeaponThread
 
         AreaEffect = new AreaDamage
         {
-            AreaEffect = Disabled, // Disabled = do not use area effect at all, Explosive is keens, Radiant is not.
+            AreaEffect = Radiant, // Disabled = do not use area effect at all, Explosive is keens, Radiant is not.
             AreaEffectDamage = 0f, // 0 = use spillover from BaseDamage, otherwise use this value.
             AreaEffectRadius = 100f,
             Explosions = Options(noVisuals: false, noSound: false, scale: 1, customParticle: "", customSound: ""),
@@ -100,7 +100,7 @@ namespace WeaponThread
         {
             Enable = true,
             VirtualBeams = true, // Only one hot beam, but with the effectiveness of the virtual beams combined (better performace)
-            ConvergeBeams = false, // When using virtual beams this option visually converges the beams to the location of the real beam.
+            ConvergeBeams = true, // When using virtual beams this option visually converges the beams to the location of the real beam.
             RotateRealBeam = true, // The real (hot beam) is rotated between all virtual beams, instead of centered between them.
             OneParticle = true, // Only spawn one particle hit per beam weapon.
         },
