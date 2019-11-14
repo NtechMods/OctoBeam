@@ -27,7 +27,7 @@ namespace WeaponThread
         Block = AimControl(trackTargets: true, turretAttached: true, turretController: true, primaryTracking: true, rotateRate: 0.04f, elevateRate: 0.04f, minAzimuth: -180, maxAzimuth: 180, minElevation: -20, maxElevation: 80, offset: Vector(x: 0, y: 0, z: 0), fixedOffset: false, debug: false),
         DeviateShotAngle = 0f,
         AimingTolerance = 4f, // 0 - 180 firing angle
-        EnergyCost = 0.001f, //(((EnergyCost * DefaultDamage) * ShotsPerSecond) * BarrelsPerShot) * ShotsPerBarrel
+        EnergyCost = 0.01f, //(((EnergyCost * DefaultDamage) * ShotsPerSecond) * BarrelsPerShot) * ShotsPerBarrel
         RotateBarrelAxis = 3, // 0 = off, 1 = xAxis, 2 = yAxis, 3 = zAxis
         AimLeadingPrediction = Advanced, // Off, Basic, Accurate, Advanced
         DelayCeaseFire = 0, // Measured in game ticks (6 = 100ms, 60 = 1 seconds, etc..).
@@ -42,7 +42,7 @@ namespace WeaponThread
             SkipBarrels = 0,
             ReloadTime = 0, // Measured in game ticks (6 = 100ms, 60 = 1 seconds, etc..).
             DelayUntilFire = 0, // Measured in game ticks (6 = 100ms, 60 = 1 seconds, etc..).
-            HeatPerShot = 1, //heat generated per shot
+            HeatPerShot = 2, //heat generated per shot
             MaxHeat = 18000, //max heat before weapon enters cooldown (70% of max heat)
             Cooldown = .95f, //percent of max heat to be under to start firing again after overheat accepts .2-.95
             HeatSinkRate = 200, //amount of heat lost per second
