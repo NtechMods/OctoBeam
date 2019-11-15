@@ -16,6 +16,7 @@ namespace WeaponThread
         MountPoints = new[]
         {
             MountPoint(subTypeId: "OctoBeamLB", aimPartId: "GazerBeamLenses", muzzlePartId: "GazerBeamLenses"),
+			MountPoint(subTypeId: "OctoBeamSB", aimPartId: "GazerBeamLenses", muzzlePartId: "GazerBeamLenses"),
         },
         Barrels = Names("muzzle_barrel_001", "muzzle_barrel_002", "muzzle_barrel_003", "muzzle_barrel_004", "muzzle_barrel_005", "muzzle_barrel_006", "muzzle_barrel_007", "muzzle_barrel_008"),
         EnableSubPartPhysics = false
@@ -28,7 +29,7 @@ namespace WeaponThread
         DeviateShotAngle = 0f,
         AimingTolerance = 4f, // 0 - 180 firing angle
         EnergyCost = 0.01f, //(((EnergyCost * DefaultDamage) * ShotsPerSecond) * BarrelsPerShot) * ShotsPerBarrel
-        RotateBarrelAxis = 3, // 0 = off, 1 = xAxis, 2 = yAxis, 3 = zAxis
+        RotateBarrelAxis = 0, // 0 = off, 1 = xAxis, 2 = yAxis, 3 = zAxis
         AimLeadingPrediction = Advanced, // Off, Basic, Accurate, Advanced
         DelayCeaseFire = 0, // Measured in game ticks (6 = 100ms, 60 = 1 seconds, etc..).
         GridWeaponCap = 6,// 0 = unlimited, the smallest weapon cap assigned to a subTypeId takes priority.
@@ -43,9 +44,9 @@ namespace WeaponThread
             ReloadTime = 0, // Measured in game ticks (6 = 100ms, 60 = 1 seconds, etc..).
             DelayUntilFire = 0, // Measured in game ticks (6 = 100ms, 60 = 1 seconds, etc..).
             HeatPerShot = 2, //heat generated per shot
-            MaxHeat = 18000, //max heat before weapon enters cooldown (70% of max heat)
+            MaxHeat = 24000, //max heat before weapon enters cooldown (70% of max heat)
             Cooldown = .95f, //percent of max heat to be under to start firing again after overheat accepts .2-.95
-            HeatSinkRate = 200, //amount of heat lost per second
+            HeatSinkRate = 600, //amount of heat lost per second
             DegradeRof = true, // progressively lower rate of fire after 80% heat threshold (80% of max heat)
             ShotsInBurst = 512,
             DelayAfterBurst = 0, // Measured in game ticks (6 = 100ms, 60 = 1 seconds, etc..).
@@ -79,7 +80,7 @@ namespace WeaponThread
     },
     Ammo = new AmmoDefinition
     {
-        BaseDamage = 8f,
+        BaseDamage = 4f,
         Mass = 0.1f, // in kilograms
         Health = 0, // 0 = disabled, otherwise how much damage it can take from other trajectiles before dying.
         BackKickForce = 0f,
