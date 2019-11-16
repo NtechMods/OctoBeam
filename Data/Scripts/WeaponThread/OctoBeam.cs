@@ -10,7 +10,7 @@ using static WeaponThread.Session;
 
 namespace WeaponThread
 {   // Don't edit above this line
-    partial class Weapons { WeaponDefinition OctoBeamLB => new WeaponDefinition {
+    partial class Weapons { WeaponDefinition OctoBeam => new WeaponDefinition {
     Assignments = new ModelAssignments
     {
         MountPoints = new[]
@@ -23,7 +23,7 @@ namespace WeaponThread
     },
     HardPoint = new HardPointDefinition
     {
-        WeaponId = "OctoBeamLB", // name of weapon in terminal
+        WeaponId = "OctoBeam", // name of weapon in terminal
         AmmoMagazineId = "Blank",
         Block = AimControl(trackTargets: true, turretAttached: true, turretController: true, primaryTracking: true, rotateRate: 0.04f, elevateRate: 0.04f, minAzimuth: -180, maxAzimuth: 180, minElevation: -20, maxElevation: 80, offset: Vector(x: 0, y: 0, z: 0), fixedOffset: false, debug: false),
         DeviateShotAngle = 0f,
@@ -178,12 +178,12 @@ namespace WeaponThread
     {
         HardPoint = new AudioHardPointDefinition
         {
-            FiringSound = "", // WepShipGatlingShot
-            FiringSoundPerShot = true,
+            FiringSound = "BeamHum", // WepShipGatlingShot
+            FiringSoundPerShot = false,
             ReloadSound = "",
             NoAmmoSound = "",
             HardPointRotationSound = "WepTurretGatlingRotate",
-            BarrelRotationSound = "WepShipGatlingRotation",
+            BarrelRotationSound = "",
         },
 
         Ammo = new AudioAmmoDefinition
