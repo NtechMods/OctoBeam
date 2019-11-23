@@ -71,14 +71,14 @@
       <Components>
         <Component Subtype="SteelPlate" Count="10" />
         <Component Subtype="Construction" Count="10" />
-        <Component Subtype="LargeTube" Count="8" />
-		<Component Subtype="Superconductor" Count="20" />
-        <Component Subtype="Motor" Count="8" />
         <Component Subtype="Computer" Count="30" />
+        <Component Subtype="LargeTube" Count="8" />
+        <Component Subtype="Motor" Count="8" />
+		<Component Subtype="Superconductor" Count="20" />
         <Component Subtype="Construction" Count="10" />
         <Component Subtype="SteelPlate" Count="50" />
       </Components>
-      <CriticalComponent Subtype="Computer" Index="0" />
+      <CriticalComponent Subtype="Superconductor" Index="0" />
       <MountPoints>
         <MountPoint Side="Bottom" StartX="0" StartY="0" EndX="1" EndY="1" />
       </MountPoints>
@@ -123,10 +123,10 @@
       <Components>
         <Component Subtype="SteelPlate" Count="10" />
         <Component Subtype="Construction" Count="10" />
-        <Component Subtype="LargeTube" Count="8" />
-		<Component Subtype="Superconductor" Count="20" />
-        <Component Subtype="Motor" Count="8" />
         <Component Subtype="Computer" Count="30" />
+        <Component Subtype="LargeTube" Count="8" />
+        <Component Subtype="Motor" Count="8" />
+		<Component Subtype="Superconductor" Count="20" />
         <Component Subtype="Construction" Count="10" />
         <Component Subtype="SteelPlate" Count="50" />
       </Components>
