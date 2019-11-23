@@ -28,11 +28,11 @@ namespace WeaponThread
         Block = AimControl(trackTargets: true, turretAttached: true, turretController: true, primaryTracking: true, rotateRate: 0.04f, elevateRate: 0.04f, minAzimuth: -180, maxAzimuth: 180, minElevation: -20, maxElevation: 80, offset: Vector(x: 0, y: 0, z: 0), fixedOffset: false, debug: false),
         DeviateShotAngle = 0f,
         AimingTolerance = 4f, // 0 - 180 firing angle
-        EnergyCost = 0.04f, //(((EnergyCost * DefaultDamage) * ShotsPerSecond) * BarrelsPerShot) * ShotsPerBarrel
+        EnergyCost = 0.02f, //(((EnergyCost * DefaultDamage) * ShotsPerSecond) * BarrelsPerShot) * ShotsPerBarrel
         RotateBarrelAxis = 0, // 0 = off, 1 = xAxis, 2 = yAxis, 3 = zAxis
         AimLeadingPrediction = Advanced, // Off, Basic, Accurate, Advanced
         DelayCeaseFire = 0, // Measured in game ticks (6 = 100ms, 60 = 1 seconds, etc..).
-        GridWeaponCap = 6,// 0 = unlimited, the smallest weapon cap assigned to a subTypeId takes priority.
+        GridWeaponCap = 12,// 0 = unlimited, the smallest weapon cap assigned to a subTypeId takes priority.
         Ui = Display(rateOfFire: true, damageModifier: true, toggleGuidance: false, enableOverload: true),
 
         Loading = new AmmoLoading
@@ -56,7 +56,7 @@ namespace WeaponThread
     {
         Threats = Valid(Characters, Projectiles, Grids),
         SubSystems = Priority(Offense, Thrust, Utility, Power, Production, Any), //define block type targeting order
-        ClosestFirst = false, // tries to pick closest targets first (blocks on grids, projectiles, etc...).
+        ClosestFirst = true, // tries to pick closest targets first (blocks on grids, projectiles, etc...).
         MinimumDiameter = 0, // 0 = unlimited, Minimum radius of threat to engage.
         MaximumDiameter = 0, // 0 = unlimited, Maximum radius of threat to engage.
         TopTargets = 4, // 0 = unlimited, max number of top targets to randomize between.
@@ -80,7 +80,7 @@ namespace WeaponThread
     },
     Ammo = new AmmoDefinition
     {
-        BaseDamage = 3f,
+        BaseDamage = 6f,
         Mass = 0.1f, // in kilograms
         Health = 0, // 0 = disabled, otherwise how much damage it can take from other trajectiles before dying.
         BackKickForce = 0f,
