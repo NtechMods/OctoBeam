@@ -37,18 +37,18 @@ namespace WeaponThread
 
         Loading = new AmmoLoading
         {
-            RateOfFire = 2048,
+            RateOfFire = 2600,
             BarrelsPerShot = 8,
             TrajectilesPerBarrel = 1, // Number of Trajectiles per barrel per fire event.
             SkipBarrels = 0,
             ReloadTime = 0, // Measured in game ticks (6 = 100ms, 60 = 1 seconds, etc..).
             DelayUntilFire = 0, // Measured in game ticks (6 = 100ms, 60 = 1 seconds, etc..).
-            HeatPerShot = 2, //heat generated per shot
+            HeatPerShot = 1, //heat generated per shot
             MaxHeat = 24000, //max heat before weapon enters cooldown (70% of max heat)
             Cooldown = .95f, //percent of max heat to be under to start firing again after overheat accepts .2-.95
-            HeatSinkRate = 600, //amount of heat lost per second
+            HeatSinkRate = 300, //amount of heat lost per second
             DegradeRof = true, // progressively lower rate of fire after 80% heat threshold (80% of max heat)
-            ShotsInBurst = 512,
+            ShotsInBurst = 0,
             DelayAfterBurst = 0, // Measured in game ticks (6 = 100ms, 60 = 1 seconds, etc..).
         },
     },
@@ -61,7 +61,7 @@ namespace WeaponThread
         MaximumDiameter = 0, // 0 = unlimited, Maximum radius of threat to engage.
         TopTargets = 4, // 0 = unlimited, max number of top targets to randomize between.
         TopBlocks = 4, // 0 = unlimited, max number of blocks to randomize between
-        StopTrackingSpeed = 70, // do not track target threats traveling faster than this speed
+        StopTrackingSpeed = 100, // do not track target threats traveling faster than this speed
     },
     DamageScales = new DamageScaleDefinition
     {
@@ -80,7 +80,7 @@ namespace WeaponThread
     },
     Ammo = new AmmoDefinition
     {
-        BaseDamage = 6f,
+        BaseDamage = 12f,
         Mass = 0.1f, // in kilograms
         Health = 0, // 0 = disabled, otherwise how much damage it can take from other trajectiles before dying.
         BackKickForce = 0f,
@@ -92,7 +92,7 @@ namespace WeaponThread
         {
             AreaEffect = Radiant, // Disabled = do not use area effect at all, Explosive is keens, Radiant is not.
             AreaEffectDamage = 0f, // 0 = use spillover from BaseDamage, otherwise use this value.
-            AreaEffectRadius = 100f,
+            AreaEffectRadius = 1f,
             Explosions = Options(noVisuals: false, noSound: false, scale: 1, customParticle: "", customSound: ""),
             Detonation = Options(detonateOnEnd: false, armOnlyOnHit: false, detonationDamage: 0, detonationRadius: 0),
             EwarFields = Options(duration: 600, stackDuration: true, depletable: true)
