@@ -37,7 +37,7 @@ namespace WeaponThread
 
         Loading = new AmmoLoading
         {
-            RateOfFire = 2600,
+            RateOfFire = 3600,
             BarrelsPerShot = 8,
             TrajectilesPerBarrel = 1, // Number of Trajectiles per barrel per fire event.
             SkipBarrels = 0,
@@ -100,9 +100,9 @@ namespace WeaponThread
         Beams = new BeamDefinition
         {
             Enable = true,
-            VirtualBeams = true, // Only one hot beam, but with the effectiveness of the virtual beams combined (better performace)
-            ConvergeBeams = true, // When using virtual beams this option visually converges the beams to the location of the real beam.
-            RotateRealBeam = true, // The real (hot beam) is rotated between all virtual beams, instead of centered between them.
+            VirtualBeams = false, // Only one hot beam, but with the effectiveness of the virtual beams combined (better performace)
+            ConvergeBeams = false, // When using virtual beams this option visually converges the beams to the location of the real beam.
+            RotateRealBeam = false, // The real (hot beam) is rotated between all virtual beams, instead of centered between them.
             OneParticle = true, // Only spawn one particle hit per beam weapon.
         },
         Trajectory = new AmmoTrajectory
