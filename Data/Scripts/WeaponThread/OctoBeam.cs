@@ -54,7 +54,7 @@ namespace WeaponThread
     },
     Targeting = new TargetingDefinition
     {
-        Threats = Valid(Characters, Projectiles, Grids),
+        Threats = Valid(Characters, Projectiles, Grids, Meteors),
         SubSystems = Priority(Offense, Thrust, Utility, Power, Production, Any), //define block type targeting order
         ClosestFirst = true, // tries to pick closest targets first (blocks on grids, projectiles, etc...).
         MinimumDiameter = 0, // 0 = unlimited, Minimum radius of threat to engage.
@@ -72,7 +72,7 @@ namespace WeaponThread
         // modifier values: -1 = disabled (higher performance), 0 = no damage, 0.01 = 1% damage, 2 = 200% damage.
         Characters = -1f,
         Grids = Options(largeGridModifier: -1f, smallGridModifier: -1f),
-        Armor = Options(armor: -1f, light: -1f, heavy: -1f, nonArmor: -1f), 
+        Armor = Options(armor: 1f, light: 1f, heavy: 0.8f, nonArmor: 1.3f),  
         Shields = Options(modifier: -1f, type: Energy), // Types: Heal, Kinetic, Energy, Emp or Bypass
 
         // ignoreOthers will cause projectiles to pass through all blocks that do not match the custom subtypeIds.
