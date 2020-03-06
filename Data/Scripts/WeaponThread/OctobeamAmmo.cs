@@ -125,7 +125,7 @@ namespace WeaponThread
             Beams = new BeamDef
             {
                 Enable = true,
-                VirtualBeams = true, // Only one hot beam, but with the effectiveness of the virtual beams combined (better performace)
+                VirtualBeams = false, // Only one hot beam, but with the effectiveness of the virtual beams combined (better performace)
                 ConvergeBeams = true, // When using virtual beams this option visually converges the beams to the location of the real beam.
                 RotateRealBeam = false, // The real (hot beam) is rotated between all virtual beams, instead of centered between them.
                 OneParticle = true, // Only spawn one particle hit per beam weapon.
