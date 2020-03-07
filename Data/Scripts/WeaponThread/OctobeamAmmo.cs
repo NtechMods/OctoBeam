@@ -185,7 +185,7 @@ namespace WeaponThread
                     {
                         Name = "EnergyBlast",
                         ApplyToShield = true,
-                        ShrinkByDistance = true,
+                        ShrinkByDistance = false,
                         Color = Color(red: 1, green: 1, blue: 1, alpha: 1),
                         Offset = Vector(x: 0, y: 0, z: 0),
                         Extras = new ParticleOptionDef
@@ -217,7 +217,7 @@ namespace WeaponThread
                         Material = "WeaponLaser",
                         DecayTime = 600,
                         Color = Color(red: 8, green: 8, blue: 64, alpha: 8),
-                        Back = true,
+                        Back = false,
                         CustomWidth = 0,
                         UseWidthVariance = false,
                         UseColorFade = true,
