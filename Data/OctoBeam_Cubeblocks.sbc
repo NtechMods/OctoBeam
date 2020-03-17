@@ -51,7 +51,22 @@
     </ResearchBlock>
   </ResearchBlocks>
   
-  
+ <!--Block Groups -->
+    <BlockVariantGroups>
+
+        <!-- Octobeams -->
+
+        <BlockVariantGroup>
+            <Id Type="MyObjectBuilder_BlockVariantGroup" Subtype="OctobeamGroup" />
+            <Icon>Textures\GUI\Icons\Cubes\BallLaserTurret.dds</Icon>
+            <DisplayName>DisplayName_BlockGroup_OctoBeam</DisplayName>
+            <Description>Effective laser turret with 8 beam lasers.</Description>
+            <Blocks>
+                <Block Type="MyObjectBuilder_LargeMissileTurret" Subtype="OctoBeamLB" />
+                <Block Type="MyObjectBuilder_LargeMissileTurret" Subtype="OctoBeamSB" />
+            </Blocks>
+        </BlockVariantGroup>
+	</BlockVariantGroups>
   
   
   <CubeBlocks>
@@ -93,6 +108,7 @@
       <MirroringZ>Y</MirroringZ>
       <EdgeType>Light</EdgeType>
 	  <EmissiveColorPreset>Extended</EmissiveColorPreset>
+			<OverlayTexture>Textures\GUI\Screens\turret_overlay.dds</OverlayTexture>
       <BuildTimeSeconds>30</BuildTimeSeconds>
       <WeaponDefinitionId Subtype="BallLazerBeam" />
       <InventoryMaxVolume>0.004</InventoryMaxVolume>
@@ -145,6 +161,7 @@
       <MirroringZ>Y</MirroringZ>
       <EdgeType>Light</EdgeType>
 	  <EmissiveColorPreset>Extended</EmissiveColorPreset>
+			<OverlayTexture>Textures\GUI\Screens\turret_overlay.dds</OverlayTexture>
       <BuildTimeSeconds>30</BuildTimeSeconds>
       <WeaponDefinitionId Subtype="BallLazerBeam" />
       <InventoryMaxVolume>0.004</InventoryMaxVolume>
@@ -169,7 +186,7 @@
       <Name>OctoBeamLaser</Name>
       <Position>
         <X>9</X>
-        <Y>9</Y>
+        <Y>10</Y>
       </Position>
     </BlockPosition>
  </BlockPositions>
