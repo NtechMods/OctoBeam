@@ -18,21 +18,21 @@ namespace WeaponThread
             AmmoMagazine = "Energy",
             AmmoRound = "BeamEnergy",
             HybridRound = false, //AmmoMagazine based weapon with energy cost
-            EnergyCost = 0.6f, //(((EnergyCost * DefaultDamage) * ShotsPerSecond) * BarrelsPerShot) * ShotsPerBarrel
-            BaseDamage = 5f,
-            Mass = 0.05f, // in kilograms
+            EnergyCost = 0.7f, //(((EnergyCost * DefaultDamage) * ShotsPerSecond) * BarrelsPerShot) * ShotsPerBarrel
+            BaseDamage = 4f,
+            Mass = 0.0f, // in kilograms
             Health = 0, // 0 = disabled, otherwise how much damage it can take from other trajectiles before dying.
             BackKickForce = 0f,
             HardPointUsable = true, // set to false if this is a shrapnel ammoType and you don't want the turret to be able to select it directly.
 
             Shape = new ShapeDef //defines the collision shape of projectile, defaults line and visual Line Length if set to 0
             {
-                Shape = LineShape, //SphereShape
+                Shape = LineShape, //SphereShape, LineShape
                 Diameter = 1,
             },
             ObjectsHit = new ObjectsHitDef
             {
-                MaxObjectsHit = 2, // 0 = disabled
+                MaxObjectsHit = 1, // 0 = disabled
                 CountBlocks = false, // counts gridBlocks and not just entities hit
             },
 			Shrapnel = new ShrapnelDef
@@ -50,7 +50,7 @@ namespace WeaponThread
                 SelfDamage = false, // true = allow self damage.
 
                 // modifier values: -1 = disabled (higher performance), 0 = no damage, 0.01 = 1% damage, 2 = 200% damage.
-                Characters = -1f,
+                Characters = 1f,
                 Grids = new GridSizeDef
                 {
                     Large = -1f,
@@ -58,16 +58,16 @@ namespace WeaponThread
                 },
                 Armor = new ArmorDef
                 {
-                    Armor = -1f,
-                    Light = 1f,
-                    Heavy = 0.3f,
-                    NonArmor = 1f,
+                    Armor = 0.3f,
+                    Light = 0.3f,
+                    Heavy = 0.1f,
+                    NonArmor = 0.7f,
                 },
                 Shields = new ShieldDef
                 {
-                    Modifier = 1f,
+                    Modifier = 2f,
                     Type = Energy, // Bypass, Kinetic
-                    BypassModifier = -1f,
+                    BypassModifier = 0.5f,
                 },
                 // first true/false (ignoreOthers) will cause projectiles to pass through all blocks that do not match the custom subtypeIds.
                 Custom = new CustomScalesDef
@@ -126,7 +126,7 @@ namespace WeaponThread
             {
                 Enable = true,
                 VirtualBeams = false, // Only one hot beam, but with the effectiveness of the virtual beams combined (better performace)
-                ConvergeBeams = true, // When using virtual beams this option visually converges the beams to the location of the real beam.
+                ConvergeBeams = false, // When using virtual beams this option visually converges the beams to the location of the real beam.
                 RotateRealBeam = false, // The real (hot beam) is rotated between all virtual beams, instead of centered between them.
                 OneParticle = true, // Only spawn one particle hit per beam weapon.
             },
@@ -138,7 +138,7 @@ namespace WeaponThread
                 MaxLifeTime = 0, // 0 is disabled, Measured in game ticks (6 = 100ms, 60 = 1 seconds, etc..).
                 AccelPerSec = 0f,
                 DesiredSpeed = 0,
-                MaxTrajectory = 5000f,
+                MaxTrajectory = 2000f,
                 FieldTime = 0, // 0 is disabled, a value causes the projectile to come to rest, spawn a field and remain for a time (Measured in game ticks, 60 = 1 second)
                 SpeedVariance = Random(start: 0, end: 0), // subtracts value from DesiredSpeed
                 RangeVariance = Random(start: 0, end: 0), // subtracts value from MaxTrajectory
@@ -162,8 +162,8 @@ namespace WeaponThread
             },
             AmmoGraphics = new GraphicDef
             {
-                ModelName = "\\Models\\Ammo\\Drone_Projectile.mwm",
-                VisualProbability = 1f,
+                ModelName = "",
+                VisualProbability = 0f,
                 ShieldHitDraw = true,
                 Particles = new AmmoParticleDef
                 {
@@ -203,7 +203,7 @@ namespace WeaponThread
                 {
                     TracerMaterial = "WeaponLaser", // WeaponLaser, ProjectileTrailLine, WarpBubble, etc..
                     ColorVariance = Random(start: 0.75f, end: 2f), // multiply the color by random values within range.
-                    WidthVariance = Random(start: 0f, end: 0.015f), // adds random value to default width (negatives shrinks width)
+                    WidthVariance = Random(start: 0f, end: 0.035f), // adds random value to default width (negatives shrinks width)
                     Tracer = new TracerBaseDef
                     {
                         Enable = true,
