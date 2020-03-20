@@ -80,11 +80,11 @@ namespace WeaponThread
                     TurretAttached = true,
                     TurretController = true,
                     PrimaryTracking = true,
-                    LockOnFocus = true,
+                    LockOnFocus = false,
                 },
                 HardWare = new HardwareDef
                 {
-                    RotateRate = 0.03f,
+                    RotateRate = 0.02f,
                     ElevateRate = 0.02f,
                     MinAzimuth = -180,
                     MaxAzimuth = 180,
@@ -96,8 +96,8 @@ namespace WeaponThread
                 },
                 Other = new OtherDef
                 {
-                    GridWeaponCap = 20,
-                    RotateBarrelAxis = 0,
+                    GridWeaponCap = 20, // how many weapons can be placed per grid
+                    RotateBarrelAxis = 3,
                     EnergyPriority = 0,
                     MuzzleCheck = false,
                     Debug = false,
@@ -105,7 +105,7 @@ namespace WeaponThread
                 Loading = new LoadingDef
                 {
                     RateOfFire = 3600,
-                    BarrelSpinRate = 0, // visual only, 0 disables and uses RateOfFire
+                    BarrelSpinRate = 20, // visual only, 0 disables and uses RateOfFire
                     BarrelsPerShot = 8,
                     TrajectilesPerBarrel = 1, // Number of Trajectiles per barrel per fire event.
                     SkipBarrels = 0,
@@ -115,9 +115,9 @@ namespace WeaponThread
                     MaxHeat = 24000, //max heat before weapon enters cooldown (70% of max heat)
                     Cooldown = .95f, //percent of max heat to be under to start firing again after overheat accepts .2-.95
                     HeatSinkRate = 360, //amount of heat lost per second
-                    DegradeRof = false, // progressively lower rate of fire after 80% heat threshold (80% of max heat)
-                    ShotsInBurst = 0,
-                    DelayAfterBurst = 0, // Measured in game ticks (6 = 100ms, 60 = 1 seconds, etc..).
+                    DegradeRof = true, // progressively lower rate of fire after 80% heat threshold (80% of max heat)
+                    ShotsInBurst = 3600,
+                    DelayAfterBurst = 300, // Measured in game ticks (6 = 100ms, 60 = 1 seconds, etc..).
                     FireFullBurst = true,
                 },
                 Audio = new HardPointAudioDef
@@ -134,8 +134,8 @@ namespace WeaponThread
                 {
                     Barrel1 = new ParticleDef
                     {
-                        Name = "", // Smoke_LargeGunShot
-                        Color = Color(red: 1, green: 1, blue: 1, alpha: 1),
+                        Name = "EnergyBlast", // Smoke_LargeGunShot
+                        Color = Color(red: 8, green: 8, blue: 15, alpha: 12),
                         Offset = Vector(x: 0, y: -1, z: 0),
                         Extras = new ParticleOptionDef
                         {
@@ -148,8 +148,8 @@ namespace WeaponThread
                     },
                     Barrel2 = new ParticleDef
                     {
-                        Name = "EnergyBlast",//Muzzle_Flash_Large
-                        Color = Color(red: 1, green: 1, blue: 1, alpha: 1),
+                        Name = "",//Muzzle_Flash_Large
+                        Color = Color(red: 8, green: 8, blue: 15, alpha: 12),
                         Offset = Vector(x: 0, y: -1, z: 0),
                         Extras = new ParticleOptionDef
                         {

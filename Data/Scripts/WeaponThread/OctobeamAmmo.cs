@@ -18,8 +18,8 @@ namespace WeaponThread
             AmmoMagazine = "Energy",
             AmmoRound = "BeamEnergy",
             HybridRound = false, //AmmoMagazine based weapon with energy cost
-            EnergyCost = 0.7f, //(((EnergyCost * DefaultDamage) * ShotsPerSecond) * BarrelsPerShot) * ShotsPerBarrel
-            BaseDamage = 4f,
+            EnergyCost = 0.6f, //(((EnergyCost * DefaultDamage) * ShotsPerSecond) * BarrelsPerShot) * ShotsPerBarrel
+            BaseDamage = 4.2f,
             Mass = 0.0f, // in kilograms
             Health = 0, // 0 = disabled, otherwise how much damage it can take from other trajectiles before dying.
             BackKickForce = 0f,
@@ -27,12 +27,12 @@ namespace WeaponThread
 
             Shape = new ShapeDef //defines the collision shape of projectile, defaults line and visual Line Length if set to 0
             {
-                Shape = LineShape, //SphereShape, LineShape
+                Shape = LineShape, //SphereShape
                 Diameter = 1,
             },
             ObjectsHit = new ObjectsHitDef
             {
-                MaxObjectsHit = 1, // 0 = disabled
+                MaxObjectsHit = 2, // 0 = disabled
                 CountBlocks = false, // counts gridBlocks and not just entities hit
             },
 			Shrapnel = new ShrapnelDef
@@ -50,7 +50,7 @@ namespace WeaponThread
                 SelfDamage = false, // true = allow self damage.
 
                 // modifier values: -1 = disabled (higher performance), 0 = no damage, 0.01 = 1% damage, 2 = 200% damage.
-                Characters = 1f,
+                Characters = -1f,
                 Grids = new GridSizeDef
                 {
                     Large = -1f,
@@ -58,16 +58,16 @@ namespace WeaponThread
                 },
                 Armor = new ArmorDef
                 {
-                    Armor = 0.3f,
-                    Light = 0.3f,
-                    Heavy = 0.1f,
-                    NonArmor = 0.7f,
+                    Armor = -1f,
+                    Light = 1f,
+                    Heavy = 0.3f,
+                    NonArmor = 1f,
                 },
                 Shields = new ShieldDef
                 {
-                    Modifier = 2f,
+                    Modifier = 1f,
                     Type = Energy, // Bypass, Kinetic
-                    BypassModifier = 0.5f,
+                    BypassModifier = -1f,
                 },
                 // first true/false (ignoreOthers) will cause projectiles to pass through all blocks that do not match the custom subtypeIds.
                 Custom = new CustomScalesDef
@@ -126,7 +126,7 @@ namespace WeaponThread
             {
                 Enable = true,
                 VirtualBeams = false, // Only one hot beam, but with the effectiveness of the virtual beams combined (better performace)
-                ConvergeBeams = false, // When using virtual beams this option visually converges the beams to the location of the real beam.
+                ConvergeBeams = true, // When using virtual beams this option visually converges the beams to the location of the real beam.
                 RotateRealBeam = false, // The real (hot beam) is rotated between all virtual beams, instead of centered between them.
                 OneParticle = true, // Only spawn one particle hit per beam weapon.
             },
@@ -163,14 +163,14 @@ namespace WeaponThread
             AmmoGraphics = new GraphicDef
             {
                 ModelName = "",
-                VisualProbability = 0f,
+                VisualProbability = 1f,
                 ShieldHitDraw = true,
                 Particles = new AmmoParticleDef
                 {
                     Ammo = new ParticleDef
                     {
-                        Name = "ShipWelderArc", //ShipWelderArc
-                        Color = Color(red: 128, green: 0, blue: 0, alpha: 1f),
+                        Name = "", //ShipWelderArc
+                        Color = Color(red: 8, green: 8, blue: 15, alpha: 12),
                         Offset = Vector(x: 0, y: 0, z: 0),
                         Extras = new ParticleOptionDef
                         {
@@ -186,13 +186,13 @@ namespace WeaponThread
                         Name = "EnergyBlast",
                         ApplyToShield = true,
                         ShrinkByDistance = false,
-                        Color = Color(red: 1, green: 1, blue: 1, alpha: 1),
+                        Color = Color(red: 8, green: 8, blue: 15, alpha: 12),
                         Offset = Vector(x: 0, y: 0, z: 0),
                         Extras = new ParticleOptionDef
                         {
                             Loop = true,
                             Restart = false,
-                            MaxDistance = 5000,
+                            MaxDistance = 2000,
                             MaxDuration = 1,
                             Scale = 1,
                             HitPlayChance = 1f,
@@ -203,7 +203,7 @@ namespace WeaponThread
                 {
                     TracerMaterial = "WeaponLaser", // WeaponLaser, ProjectileTrailLine, WarpBubble, etc..
                     ColorVariance = Random(start: 0.75f, end: 2f), // multiply the color by random values within range.
-                    WidthVariance = Random(start: 0f, end: 0.035f), // adds random value to default width (negatives shrinks width)
+                    WidthVariance = Random(start: 0f, end: 0.015f), // adds random value to default width (negatives shrinks width)
                     Tracer = new TracerBaseDef
                     {
                         Enable = true,
