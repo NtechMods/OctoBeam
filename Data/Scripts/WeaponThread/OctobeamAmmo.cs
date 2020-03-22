@@ -19,7 +19,7 @@ namespace WeaponThread
             AmmoRound = "BeamEnergy",
             HybridRound = false, //AmmoMagazine based weapon with energy cost
             EnergyCost = 0.6f, //(((EnergyCost * DefaultDamage) * ShotsPerSecond) * BarrelsPerShot) * ShotsPerBarrel
-            BaseDamage = 4.2f,
+            BaseDamage = 3.9f,
             Mass = 0.0f, // in kilograms
             Health = 0, // 0 = disabled, otherwise how much damage it can take from other trajectiles before dying.
             BackKickForce = 0f,
@@ -190,7 +190,7 @@ namespace WeaponThread
                         Offset = Vector(x: 0, y: 0, z: 0),
                         Extras = new ParticleOptionDef
                         {
-                            Loop = true,
+                            Loop = false,
                             Restart = false,
                             MaxDistance = 2000,
                             MaxDuration = 1,
