@@ -887,7 +887,7 @@
       <DurationMin>1</DurationMin> <!-- minimum duration of effect -->
       <DurationMax>3</DurationMax> <!-- maximum duration of effect -->
       <DistanceMax>200</DistanceMax>
-      <Loop>true</Loop> <!-- Loops effect in world true = repeats / false = plays once per initiation -->
+      <Loop>false</Loop> <!-- Loops effect in world true = repeats / false = plays once per initiation -->
       <ParticleGenerations>
 	  
  
@@ -1760,7 +1760,7 @@
       <DurationMin>0.32</DurationMin>
       <DurationMax>0.32</DurationMax>
       <DistanceMax>200</DistanceMax>
-      <Loop>true</Loop>
+      <Loop>false</Loop>
       <ParticleGenerations>
         <ParticleGeneration Name="Vertical_Sprite" Version="2">
           <GenerationType>GPU</GenerationType>
