@@ -170,7 +170,7 @@ namespace WeaponThread
                     Ammo = new ParticleDef
                     {
                         Name = "", //ShipWelderArc
-                        Color = Color(red: 8, green: 8, blue: 15, alpha: 12),
+                        Color = Color(red: 10, green: 20, blue: 25, alpha: 1.5f),
                         Offset = Vector(x: 0, y: 0, z: 0),
                         Extras = new ParticleOptionDef
                         {
