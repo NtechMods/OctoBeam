@@ -96,7 +96,7 @@ namespace WeaponThread
                 },
                 Other = new OtherDef
                 {
-                    GridWeaponCap = 20, // how many weapons can be placed per grid
+                    GridWeaponCap = 0, // how many weapons can be placed per grid
                     RotateBarrelAxis = 3,
                     EnergyPriority = 0,
                     MuzzleCheck = false,
