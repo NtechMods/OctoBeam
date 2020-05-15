@@ -69,7 +69,7 @@ namespace WeaponThread
 
                 Ui = new UiDef
                 {
-                    RateOfFire = true,
+                    RateOfFire = false,
                     DamageModifier = true,
                     ToggleGuidance = false,
                     EnableOverload =  true,

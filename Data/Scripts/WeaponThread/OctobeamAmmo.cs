@@ -19,7 +19,7 @@ namespace WeaponThread
             AmmoRound = "BeamEnergy",
             HybridRound = false, //AmmoMagazine based weapon with energy cost
             EnergyCost = 0.6f, //(((EnergyCost * DefaultDamage) * ShotsPerSecond) * BarrelsPerShot) * ShotsPerBarrel
-            BaseDamage = 3.9f,
+            BaseDamage = 4.2f,
             Mass = 0.0f, // in kilograms
             Health = 0, // 0 = disabled, otherwise how much damage it can take from other trajectiles before dying.
             BackKickForce = 0f,
