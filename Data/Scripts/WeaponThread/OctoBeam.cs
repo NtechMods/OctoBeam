@@ -84,8 +84,8 @@ namespace WeaponThread
                 },
                 HardWare = new HardwareDef
                 {
-                    RotateRate = 0.03f,
-                    ElevateRate = 0.03f,
+                    RotateRate = 0.04f,
+                    ElevateRate = 0.04f,
                     MinAzimuth = -180,
                     MaxAzimuth = 180,
                     MinElevation = -20,
@@ -118,7 +118,7 @@ namespace WeaponThread
                     DegradeRof = true, // progressively lower rate of fire after 80% heat threshold (80% of max heat)
                     ShotsInBurst = 0,
                     DelayAfterBurst = 0, // Measured in game ticks (6 = 100ms, 60 = 1 seconds, etc..).
-                    FireFullBurst = true,
+                    FireFullBurst = false
                 },
                 Audio = new HardPointAudioDef
                 {
