@@ -59,7 +59,7 @@ namespace WeaponThread
                 Armor = new ArmorDef
                 {
                     Armor = -1f,
-                    Light = 1f,
+                    Light = 0.7f,
                     Heavy = 0.3f,
                     NonArmor = 1f,
                 },

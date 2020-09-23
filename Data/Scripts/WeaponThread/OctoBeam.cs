@@ -113,8 +113,8 @@ namespace WeaponThread
                     DelayUntilFire = 0, // Measured in game ticks (6 = 100ms, 60 = 1 seconds, etc..).
                     HeatPerShot = 2, //heat generated per shot
                     MaxHeat = 24000, //max heat before weapon enters cooldown (70% of max heat)
-                    Cooldown = .95f, //percent of max heat to be under to start firing again after overheat accepts .2-.95
-                    HeatSinkRate = 370, //amount of heat lost per second
+                    Cooldown = .55f, //percent of max heat to be under to start firing again after overheat accepts .2-.95
+                    HeatSinkRate = 390, //amount of heat lost per second
                     DegradeRof = true, // progressively lower rate of fire after 80% heat threshold (80% of max heat)
                     ShotsInBurst = 0,
                     DelayAfterBurst = 0, // Measured in game ticks (6 = 100ms, 60 = 1 seconds, etc..).
@@ -136,7 +136,7 @@ namespace WeaponThread
                     {
                         Name = "EnergyBlast", // Smoke_LargeGunShot
                         Color = Color(red: 8, green: 8, blue: 15, alpha: 12),
-                        Offset = Vector(x: 0, y: -1, z: 0),
+                        Offset = Vector(x: 0, y: 0, z: 0),
                         Extras = new ParticleOptionDef
                         {
                             Loop = false,
