@@ -64,7 +64,7 @@ namespace WeaponThread
                 WeaponName = "OctoBeam", // name of weapon in terminal
                 DeviateShotAngle = 0f,
                 AimingTolerance = 4f, // 0 - 180 firing angle
-                AimLeadingPrediction = Advanced, // Off, Basic, Accurate, Advanced
+                AimLeadingPrediction = Off, // Off, Basic, Accurate, Advanced
                 DelayCeaseFire = 60, // Measured in game ticks (6 = 100ms, 60 = 1 seconds, etc..).
 
                 Ui = new UiDef
