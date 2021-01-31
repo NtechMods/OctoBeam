@@ -190,7 +190,7 @@ namespace WeaponThread
                         Offset = Vector(x: 0, y: 0, z: 0),
                         Extras = new ParticleOptionDef
                         {
-                            Loop = false,
+                            Loop = true,
                             Restart = false,
                             MaxDistance = 2000,
                             MaxDuration = 1,
@@ -209,7 +209,7 @@ namespace WeaponThread
                         Enable = true,
                         Length = 1f,
                         Width = 0.05f,
-                        Color = Color(red: 8, green: 8, blue: 15, alpha: 12),
+                        Color = Color(red: 8, green: 8, blue: 15, alpha: 6),
                     },
                     Trail = new TrailDef
                     {
