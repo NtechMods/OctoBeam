@@ -887,7 +887,7 @@
       <DurationMin>1</DurationMin> <!-- minimum duration of effect -->
       <DurationMax>3</DurationMax> <!-- maximum duration of effect -->
       <DistanceMax>200</DistanceMax>
-      <Loop>false</Loop> <!-- Loops effect in world true = repeats / false = plays once per initiation -->
+      <Loop>true</Loop> <!-- Loops effect in world true = repeats / false = plays once per initiation -->
       <ParticleGenerations>
 	  
  
@@ -1091,19 +1091,19 @@
                     <Keys>
                       <Key>
                         <Time>0</Time>
-                        <ValueFloat>0.4</ValueFloat>
+                        <ValueFloat>0.2</ValueFloat>
                       </Key>
                       <Key>
                         <Time>0.33</Time>
-                        <ValueFloat>0.4</ValueFloat>
+                        <ValueFloat>0.2</ValueFloat>
                       </Key>
                       <Key>
                         <Time>0.66</Time>
-                        <ValueFloat>0.4</ValueFloat>
+                        <ValueFloat>0.2</ValueFloat>
                       </Key>
                       <Key>
                         <Time>1</Time>
-                        <ValueFloat>0.4</ValueFloat>
+                        <ValueFloat>0.2</ValueFloat>
                       </Key>
                     </Keys>
                   </Value2D>
