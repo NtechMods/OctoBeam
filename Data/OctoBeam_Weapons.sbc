@@ -13,7 +13,7 @@
       <NoAmmoSoundName>WepShipGatlingNoAmmo</NoAmmoSoundName>
       <SecondarySoundName>WepShipGatlingRotation</SecondarySoundName>
       <AmmoMagazines>
-        <AmmoMagazine Subtype="Blank" />
+        <AmmoMagazine Subtype="Energy" />
       </AmmoMagazines>
       <ReloadTime>0</ReloadTime>
     </Weapon>
@@ -22,7 +22,7 @@
    <Blueprint>
       <Id>
         <TypeId>BlueprintDefinition</TypeId>
-        <SubtypeId>Blank</SubtypeId>
+        <SubtypeId>OctoAmmo</SubtypeId>
       </Id>
       <DisplayName>Blank Ammo for Lasers</DisplayName>
       <Icon>Textures\GUI\Icons\ammo\DeURounds.dds</Icon>
@@ -31,7 +31,7 @@
 		<Item Amount="1" TypeId="Ingot" SubtypeId="Nickel" />
 		<Item Amount="1" TypeId="Ingot" SubtypeId="Uranium" />
       </Prerequisites>
-      <Result Amount="1" TypeId="AmmoMagazine" SubtypeId="Blank" />
+      <Result Amount="1" TypeId="AmmoMagazine" SubtypeId="Energy" />
       <BaseProductionTimeInSeconds>60</BaseProductionTimeInSeconds>
     </Blueprint>
   </Blueprints>
