@@ -24,7 +24,7 @@ namespace Scripts
 
         private AmmoDef OctoAmmo => new AmmoDef
         {
-            AmmoMagazine = "Energy",
+            AmmoMagazine = "",
             AmmoRound = "Blank",
             HybridRound = false, //AmmoMagazine based weapon with energy cost
             EnergyCost = 0.3f, //(((EnergyCost * DefaultDamage) * ShotsPerSecond) * BarrelsPerShot) * ShotsPerBarrel
@@ -83,7 +83,7 @@ namespace Scripts
                 Characters = -1f,
                 FallOff = new FallOffDef
                 {
-                    Distance = 3000f, // Distance at which max damage begins falling off.
+                    Distance = 2000f, // Distance at which max damage begins falling off.
                     MinMultipler = 0.1f, // value from 0.0f to 1f where 0.1f would be a min damage of 10% of max damage.
                 },
                 Grids = new GridSizeDef
@@ -156,7 +156,7 @@ namespace Scripts
                     NoVisuals = false,
                     NoSound = false,
                     Scale = 1,
-                    NoShrapnel = false,
+                    NoShrapnel = true,
                     NoDeformation = false,
                     CustomParticle = "Energy_Explosion",
                     CustomSound = "",
@@ -287,14 +287,7 @@ namespace Scripts
                         {
                             Enable = false, // If true Tracer TextureMode is ignored
                             Textures = new[] {
-                                "BlackFireSeg1",
-                                "BlackFireSeg2",
-                                "BlackFireSeg3",
-                                "BlackFireSeg4",
-                                "BlackFireSeg5",
-                                "BlackFireSeg6",
-                                "BlackFireSeg7",
-                                "BlackFireSeg8",
+                                "",
                             },
                             SegmentLength = 30f, // Uses the values below.
                             SegmentGap = 0f, // Uses Tracer textures and values

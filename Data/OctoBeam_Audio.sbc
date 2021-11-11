@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Sounds>
-    <Sound>
+   <!--<Sound>
       <Id>
         <TypeId>AudioDefinition</TypeId>
         <SubtypeId>BeamHum</SubtypeId>
@@ -22,6 +22,30 @@
           <Start>Audio\WEP\ARC\BeamLaserHum_3D_M.wav</Start>
           <Loop>Audio\WEP\ARC\BeamLaserHum_3D_M.wav</Loop>
           <End>Audio\WEP\ARC\BeamLaserHum_3D_M.wav</End>
+        </Wave>
+      </Waves>
+    </Sound>-->
+    <Sound>
+      <Id>
+        <TypeId>AudioDefinition</TypeId>
+        <SubtypeId>BeamHum</SubtypeId>
+      </Id>
+      <Category>WEP_TURR</Category>
+      <MaxDistance>200</MaxDistance>
+      <PitchVariation>50</PitchVariation>
+      <VolumeVariation>0.2</VolumeVariation>
+      <Volume>0.6</Volume>
+	  <Loopable>false</Loopable>
+      <Waves>
+        <Wave Type="D2">
+          <Start>Audio\WEP\ARC\BeamDischargeEnd_2D_S.wav</Start>
+          <Loop>Audio\WEP\ARC\BeamDischargeLoop_2D_S.wav</Loop>
+          <End>Audio\WEP\ARC\BeamDischargeEnd_2D_S.wav</End>
+        </Wave>
+        <Wave Type="D3">
+          <Start>Audio\WEP\ARC\BeamDischargeStart_3D_M.wav</Start>
+          <Loop>Audio\WEP\ARC\BeamDischargeLoop_3D_M.wav</Loop>
+          <End>Audio\WEP\ARC\BeamDischargeEnd_3D_M.wav</End>
         </Wave>
       </Waves>
     </Sound>
