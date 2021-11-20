@@ -124,19 +124,19 @@ namespace Scripts
                     ReloadTime = 0, // Measured in game ticks (6 = 100ms, 60 = 1 seconds, etc..).
                     MagsToLoad = 0, // Number of physical magazines to consume on reload.
                     DelayUntilFire = 0, // Measured in game ticks (6 = 100ms, 60 = 1 seconds, etc..).
-                    HeatPerShot = 2, //heat generated per shot
+                    HeatPerShot = 18, //heat generated per shot
                     MaxHeat = 70000, //max heat before weapon enters cooldown (70% of max heat)
-                    Cooldown = .95f, //percent of max heat to be under to start firing again after overheat accepts .2-.95
-                    HeatSinkRate = 490, //amount of heat lost per second
+                    Cooldown = .50f, //percent of max heat to be under to start firing again after overheat accepts .2-.95
+                    HeatSinkRate = 6000, //amount of heat lost per second
                     DegradeRof = false, // progressively lower rate of fire after 80% heat threshold (80% of max heat)
-                    ShotsInBurst = 0,
-                    DelayAfterBurst = 0, // Measured in game ticks (6 = 100ms, 60 = 1 seconds, etc..).
+                    ShotsInBurst = 450,
+                    DelayAfterBurst = 1, // Measured in game ticks (6 = 100ms, 60 = 1 seconds, etc..).
                     FireFullBurst = false,
                     GiveUpAfterBurst = false,
                     BarrelSpinRate = 20, // Visual only, 0 disables and uses RateOfFire.
                     DeterministicSpin = false, // Spin barrel position will always be relative to initial / starting positions (spin will not be as smooth).
                     SpinFree = true, // Spin barrel while not firing.
-                    StayCharged = true, // Will start recharging whenever power cap is not full.
+                    StayCharged = false, // Will start recharging whenever power cap is not full.
                 },
                 Audio = new HardPointAudioDef {
                     PreFiringSound = "",
@@ -146,7 +146,7 @@ namespace Scripts
                     NoAmmoSound = "ArcWepShipGatlingNoAmmo",
                     HardPointRotationSound = "WepTurretGatlingRotate",
                     BarrelRotationSound = "",
-                    FireSoundEndDelay = 300, // Measured in game ticks(6 = 100ms, 60 = 1 seconds, etc..).
+                    FireSoundEndDelay = 0, // Measured in game ticks(6 = 100ms, 60 = 1 seconds, etc..).
                 },
                 Graphics = new HardPointParticleDef {
                     Effect1 = new ParticleDef
@@ -160,7 +160,7 @@ namespace Scripts
                             Loop = false,
                             Restart = false,
                             MaxDistance = 100,
-                            MaxDuration = 1,
+                            MaxDuration = 0.1f,
                             Scale = 1f,
                         },
                     },

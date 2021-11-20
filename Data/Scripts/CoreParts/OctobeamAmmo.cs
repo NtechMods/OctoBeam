@@ -27,8 +27,8 @@ namespace Scripts
             AmmoMagazine = "",
             AmmoRound = "Blank",
             HybridRound = false, //AmmoMagazine based weapon with energy cost
-            EnergyCost = 0.3f, //(((EnergyCost * DefaultDamage) * ShotsPerSecond) * BarrelsPerShot) * ShotsPerBarrel
-            BaseDamage = 16.2f,
+            EnergyCost = 0.4f, //(((EnergyCost * DefaultDamage) * ShotsPerSecond) * BarrelsPerShot) * ShotsPerBarrel
+            BaseDamage = 17.2f,
             Mass = 0, // in kilograms
             Health = 0, // 0 = disabled, otherwise how much damage it can take from other trajectiles before dying.
             BackKickForce = 0f,
@@ -163,10 +163,10 @@ namespace Scripts
                 },
                 Detonation = new DetonateDef
                 {
-                    DetonateOnEnd = false,
+                    DetonateOnEnd = true,
                     ArmOnlyOnHit = false,
-                    DetonationDamage = 0,
-                    DetonationRadius = 0,
+                    DetonationDamage = 5000,
+                    DetonationRadius = 5,
                 },
                 EwarFields = new EwarFieldsDef
                 {
@@ -188,7 +188,7 @@ namespace Scripts
             {
                 Enable = true,
                 VirtualBeams = true, // Only one hot beam, but with the effectiveness of the virtual beams combined (better performace)
-                ConvergeBeams = false, // When using virtual beams this option visually converges the beams to the location of the real beam.
+                ConvergeBeams = true, // When using virtual beams this option visually converges the beams to the location of the real beam.
                 RotateRealBeam = false, // The real (hot beam) is rotated between all virtual beams, instead of centered between them.
                 OneParticle = true, // Only spawn one particle hit per beam weapon.
             },
@@ -258,7 +258,7 @@ namespace Scripts
                         Offset = Vector(x: 0, y: 0, z: 0),
                         Extras = new ParticleOptionDef
                         {
-                            Loop = true,
+                            Loop = false,
                             Restart = false,
                             MaxDistance = 2000,
                             MaxDuration = 1,
@@ -325,10 +325,10 @@ namespace Scripts
             AmmoAudio = new AmmoAudioDef
             {
                 TravelSound = "",
-                HitSound = "",
-                ShieldHitSound = "",
-                PlayerHitSound = "",
-                VoxelHitSound = "",
+                HitSound = "BeamBlast",
+                ShieldHitSound = "BeamBlast",
+                PlayerHitSound = "BeamBlast",
+                VoxelHitSound = "BeamBlast",
                 FloatingHitSound = "",
                 HitPlayChance = 1,
                 HitPlayShield = true,
