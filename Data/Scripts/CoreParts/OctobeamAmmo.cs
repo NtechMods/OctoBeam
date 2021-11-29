@@ -25,7 +25,7 @@ namespace Scripts
         private AmmoDef OctoAmmo => new AmmoDef
         {
             AmmoMagazine = "",
-            AmmoRound = "Blank",
+            AmmoRound = "BeamLasers",
             HybridRound = false, //AmmoMagazine based weapon with energy cost
             EnergyCost = 0.4f, //(((EnergyCost * DefaultDamage) * ShotsPerSecond) * BarrelsPerShot) * ShotsPerBarrel
             BaseDamage = 17.2f,

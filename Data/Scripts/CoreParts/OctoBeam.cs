@@ -26,7 +26,15 @@ namespace Scripts
                         ElevationPartId = "",
                         DurabilityMod = 0.25f, // GeneralDamageMultiplier, 0.25f = 400% resistance.
                     },
-
+                	new MountPointDef
+					{
+						SubtypeId = "OctoBeamSB",
+                        SpinPartId = "GazerBeamLenses", // For weapons with a spinning barrel such as Gatling Guns.
+                        MuzzlePartId = "GazerBeamLenses", // The subpart where your muzzle empties are located.
+                        AzimuthPartId = "",
+                        ElevationPartId = "",
+                        DurabilityMod = 0.25f, // GeneralDamageMultiplier, 0.25f = 400% resistance.
+                    },
                 },
                 Muzzles = new [] {
                     "muzzle_barrel_001",
