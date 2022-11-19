@@ -3,13 +3,20 @@ using static Scripts.Structure.WeaponDefinition.AmmoDef;
 using static Scripts.Structure.WeaponDefinition.AmmoDef.EjectionDef;
 using static Scripts.Structure.WeaponDefinition.AmmoDef.EjectionDef.SpawnType;
 using static Scripts.Structure.WeaponDefinition.AmmoDef.ShapeDef.Shapes;
-using static Scripts.Structure.WeaponDefinition.AmmoDef.DamageScaleDef.CustomScalesDef;
 using static Scripts.Structure.WeaponDefinition.AmmoDef.DamageScaleDef.CustomScalesDef.SkipMode;
 using static Scripts.Structure.WeaponDefinition.AmmoDef.GraphicDef;
+using static Scripts.Structure.WeaponDefinition.AmmoDef.FragmentDef;
+using static Scripts.Structure.WeaponDefinition.AmmoDef.PatternDef.PatternModes;
+using static Scripts.Structure.WeaponDefinition.AmmoDef.FragmentDef.TimedSpawnDef.PointTypes;
 using static Scripts.Structure.WeaponDefinition.AmmoDef.TrajectoryDef;
+using static Scripts.Structure.WeaponDefinition.AmmoDef.TrajectoryDef.ApproachDef.Conditions;
+using static Scripts.Structure.WeaponDefinition.AmmoDef.TrajectoryDef.ApproachDef.UpRelativeTo;
+using static Scripts.Structure.WeaponDefinition.AmmoDef.TrajectoryDef.ApproachDef.StartFailure;
+using static Scripts.Structure.WeaponDefinition.AmmoDef.TrajectoryDef.ApproachDef.VantagePointRelativeTo;
 using static Scripts.Structure.WeaponDefinition.AmmoDef.TrajectoryDef.GuidanceType;
 using static Scripts.Structure.WeaponDefinition.AmmoDef.DamageScaleDef;
 using static Scripts.Structure.WeaponDefinition.AmmoDef.DamageScaleDef.ShieldDef.ShieldType;
+using static Scripts.Structure.WeaponDefinition.AmmoDef.DamageScaleDef.DeformDef.DeformTypes;
 using static Scripts.Structure.WeaponDefinition.AmmoDef.AreaOfDamageDef;
 using static Scripts.Structure.WeaponDefinition.AmmoDef.AreaOfDamageDef.Falloff;
 using static Scripts.Structure.WeaponDefinition.AmmoDef.AreaOfDamageDef.AoeShape;
@@ -20,6 +27,7 @@ using static Scripts.Structure.WeaponDefinition.AmmoDef.EwarDef.PushPullDef.Forc
 using static Scripts.Structure.WeaponDefinition.AmmoDef.GraphicDef.LineDef;
 using static Scripts.Structure.WeaponDefinition.AmmoDef.GraphicDef.LineDef.TracerBaseDef;
 using static Scripts.Structure.WeaponDefinition.AmmoDef.GraphicDef.LineDef.Texture;
+using static Scripts.Structure.WeaponDefinition.AmmoDef.GraphicDef.DecalDef;
 using static Scripts.Structure.WeaponDefinition.AmmoDef.DamageScaleDef.DamageTypes.Damage;
 
 namespace Scripts
@@ -34,14 +42,18 @@ namespace Scripts
             HybridRound = false, //AmmoMagazine based weapon with energy cost
             EnergyCost = 0.4f, //(((EnergyCost * DefaultDamage) * ShotsPerSecond) * BarrelsPerShot) * ShotsPerBarrel
             BaseDamage = 17.2f,
-            Mass = 0, // in kilograms
-            Health = 0, // 0 = disabled, otherwise how much damage it can take from other trajectiles before dying.
-            BackKickForce = 0f,
-            DecayPerShot = 0,
-            HardPointUsable = true, // set to false if this is a shrapnel ammoType and you don't want the turret to be able to select it directly.
+            Mass = 0f, // In kilograms; how much force the impact will apply to the target.
+            Health = 0, // How much damage the projectile can take from other projectiles (base of 1 per hit) before dying; 0 disables this and makes the projectile untargetable.
+            BackKickForce = 0f, // Recoil. This is applied to the Parent Grid.
+            DecayPerShot = 0f, // Damage to the firing weapon itself. 
+			       //float.MaxValue will drop the weapon to the first build state and destroy all components used for construction
+			       //If greater than cube integrity it will remove the cube upon firing, without causing deformation (makes it look like the whole "block" flew away)
+            HardPointUsable = true, // Whether this is a primary ammo type fired directly by the turret. Set to false if this is a shrapnel ammoType and you don't want the turret to be able to select it directly.
             EnergyMagazineSize = 1, // For energy weapons, how many shots to fire before reloading.
-            IgnoreWater = true,
+            IgnoreWater = false, // Whether the projectile should be able to penetrate water when using WaterMod.
             IgnoreVoxels = false, // Whether the projectile should be able to penetrate voxels.
+            Synchronize = false, // Be careful, do not use on high fire rate weapons.  Only works on drones and Smart projectiles.  Will only work on chained/staged fragments with a frag count of 1, will no longer sync once frag chain > 1.
+            HeatModifier = -1f, // Allows this ammo to modify the amount of heat the weapon produces per shot.
             Shape = new ShapeDef //defines the collision shape of projectile, defaults line and visual Line Length if set to 0
             {
                 Shape = LineShape, //SphereShape
@@ -61,7 +73,25 @@ namespace Scripts
                 RandomizeDir = false, // randomize between forward and backward directions
                 DropVelocity = false, // fragments will not inherit velocity from parent.
                 Offset = 0f, // Offsets the fragment spawn by this amount, in meters (positive forward, negative for backwards).
-                Radial = 30f, // Determines starting angle for Degrees of spread above.  IE, 0 degrees and 90 radial goes perpendicular to travel path
+                Offset = 0f, // Offsets the fragment spawn by this amount, in meters (positive forward, negative for backwards), value is read from parent ammo type.
+                Radial = 0f, // Determines starting angle for Degrees of spread above.  IE, 0 degrees and 90 radial goes perpendicular to travel path
+                MaxChildren = 0, // number of maximum branches for fragments from the roots point of view, 0 is unlimited
+                IgnoreArming = true, // If true, ignore ArmOnHit or MinArmingTime in EndOfLife definitions
+                AdvOffset = Vector(x: 0, y: 0, z: 0), // advanced offsets the fragment by xyz coordinates relative to parent, value is read from fragment ammo type.
+                TimedSpawns = new TimedSpawnDef // disables FragOnEnd in favor of info specified below
+                {
+                    Enable = true, // Enables TimedSpawns mechanism
+                    Interval = 0, // Time between spawning fragments, in ticks, 0 means every tick, 1 means every other
+                    StartTime = 0, // Time delay to start spawning fragments, in ticks, of total projectile life
+                    MaxSpawns = 1, // Max number of fragment children to spawn
+                    Proximity = 1000, // Starting distance from target bounding sphere to start spawning fragments, 0 disables this feature.  No spawning outside this distance
+                    ParentDies = true, // Parent dies once after it spawns its last child.
+                    PointAtTarget = true, // Start fragment direction pointing at Target
+                    PointType = Predict, // Point accuracy, Direct (straight forward), Lead (always fire), Predict (only fire if it can hit)
+                    DirectAimCone = 0f, //Aim cone used for Direct fire, in degrees
+                    GroupSize = 5, // Number of spawns in each group
+                    GroupDelay = 120, // Delay between each group.
+                },
             },
             Pattern = new PatternDef
             {
@@ -69,13 +99,13 @@ namespace Scripts
 
                     "",
                 },
-                Enable = false,
-                TriggerChance = 1f,
-                Random = false,
-                RandomMin = 1,
+                Mode = Fragment, // Select when to activate this pattern, options: Never, Weapon, Fragment, Both 
+                TriggerChance = 1f, // This is %
+                Random = false, // This randomizes the number spawned at once, NOT the list order.
+                RandomMin = 1, 
                 RandomMax = 1,
-                SkipParent = false,
-                PatternSteps = 1, // Number of Ammos activated per round, will progress in order and loop.  Ignored if Random = true.
+                SkipParent = false, // Skip the Ammo itself, in the list
+                PatternSteps = 1, // Number of Ammos activated per round, will progress in order and loop. Ignored if Random = true.
             },
             DamageScales = new DamageScaleDef
             {
@@ -84,14 +114,6 @@ namespace Scripts
                 SelfDamage = false, // true = allow self damage.
                 HealthHitModifier = 0.1f, // How much Health to subtract from another projectile on hit; defaults to 1 if zero or less.
                 VoxelHitModifier = 1, // Voxel damage multiplier; defaults to 1 if zero or less.
-                DamageType = new DamageTypes
-                {
-                    Base = Energy, //Kinetic
-                    AreaEffect = Energy,
-                    Detonation = Energy,
-                    Shield = Energy,
-                },
-                // modifier values: -1 = disabled (higher performance), 0 = no damage, 0.01 = 1% damage, 2 = 200% damage.
                 Characters = -1f,
                 FallOff = new FallOffDef
                 {
@@ -116,7 +138,18 @@ namespace Scripts
                     Type = Default, // Damage vs healing against shields; Default, Heal
                     BypassModifier = -1f,
                 },
-                // first true/false (ignoreOthers) will cause projectiles to pass through all blocks that do not match the custom subtypeIds.
+                DamageType = new DamageTypes
+                {
+                    Base = Energy, //Kinetic
+                    AreaEffect = Energy,
+                    Detonation = Energy,
+                    Shield = Energy,
+                },
+                Deform = new DeformDef
+                {
+                    DeformType = HitBlock,
+                    DeformDelay = 30,
+                },
                 Custom = new CustomScalesDef
                 {
                     IgnoreAllOthers = false,
@@ -255,9 +288,12 @@ namespace Scripts
                     Inaccuracy = 0f, // 0 is perfect, hit accuracy will be a random num of meters between 0 and this value.
                     Aggressiveness = 1f, // controls how responsive tracking is.
                     MaxLateralThrust = 0.5f, // controls how sharp the trajectile may turn
+                    NavAcceleration = 0, // helps influence how the projectile steers. 
                     TrackingDelay = 0, // Measured in Shape diameter units traveled.
+                    AccelClearance = false, // Setting this to true will prevent smart acceleration until it is clear of the grid and tracking delay has been met (free fall).
                     MaxChaseTime = 1800, // Measured in game ticks (6 = 100ms, 60 = 1 seconds, etc..).
                     OverideTarget = false, // when set to true ammo picks its own target, does not use hardpoint's.
+                    CheckFutureIntersection = false, // Utilize obstacle avoidance for drones
                     MaxTargets = 3, // Number of targets allowed before ending, 0 = unlimited
                     NoTargetExpire = false, // Expire without ever having a target at TargetLossTime
                     Roam = true, // Roam current area after target loss  
@@ -265,6 +301,107 @@ namespace Scripts
                     OffsetRatio = 0.05f, // The ratio to offset the random direction (0 to 1) 
                     OffsetTime = 60, // how often to offset degree, measured in game ticks (6 = 100ms, 60 = 1 seconds, etc..)                     
                 },
+                /*Approaches = new [] // These approaches move forward and backward in order, once the end condition of the last one is reached it will revert to default behavior.
+                {
+                    new ApproachDef
+                    {
+                        Failure = MoveToPrevious, // Wait, MoveToPrevious, MoveToNext, ForceReset -- A failure is when the end condition is reached without having met the start condition. 
+                        OnFailureRevertTo = -1, // -1 to reset to BEFORE the for approach stage was activated.  First stage is 0, second is 1, etc...
+                        StartCondition1 = Lifetime, // Ignore, Spawn, DistanceFromTarget, Lifetime, MinTravelRequired, DesiredElevation (DO NOT set con1 and con2 to same value)
+                        Start1Value = 60, // both conditions are evaluated before activation, use Ignore to skip
+                        StartCondition2 = Ignore, // Ignore, Spawn, DistanceFromTarget, Lifetime, MinTravelRequired, DesiredElevation (DO NOT set con1 and con2 to same value)
+                        Start2Value = 0, // both conditions are evaluated before activation, use Ignore to skip
+                        EndCondition1 = DesiredElevation, // Ignore, DistanceFromTarget, Lifetime, MinTravelRequired, DesiredElevation (DO NOT set con1 and con2 to same value)
+                        End1Value = 1000, // both conditions are evaluated before activation, use Ignore to skip
+                        EndCondition2 = Ignore, // Ignore, DistanceFromTarget, Lifetime, MinTravelRequired, DesiredElevation (DO NOT set con1 and con2 to same value)
+                        End2Value = 0, // both conditions are evaluated before activation, use Ignore to skip
+                        UpDirection = RelativeToGravity, // RelativeToBlock, RelativeToGravity, TargetDirection, TargetVelocity,
+                        AdjustUpDir = true, // adjust upDir relative to set condition overtime
+                        VantagePoint = Surface, // Surface, Target, Shooter, Origin, MidPoint (between target and shooter)
+                        AdjustVantagePoint = false, // Updated the approach vantage point as it moves/changes.
+                        AngleOffset = 0, // value 0 - 1, rotates the Updir
+                        LeadDistance = 40, // Add additional "lead" in meters to the trajectory (project in the future), this will be applied even before TrackingDistance is met. 
+                        PushLeadByTravelDistance = true, // the follow lead position will move in its point direction by an amount equal to the projectiles travel distance.
+                        TrackingDistance = 100, // Minimum travel distance before projectile begins racing to target
+                        DesiredElevation = 100, // The desired elevation relative to vantagepoint 
+                        AdjustElevation = Surface, // Desired elevation adjusts in response relative changes between the proejctile and monitor variables.
+                        AccelMulti = 1.5, // Modify default acceleration by this factor
+                        SpeedCapMulti = 0.5, // Limit max speed to this factor, must keep this value BELOW default maxspeed (1).
+                        AdjustDestinationPosition = false, // End conditions relative to the target position will shift as the target moves
+                        CanExpireOnceStarted = false, // This stages values will continue to apply until the end conditions are met.
+                        AlternateModel = "", // Define only if you want to switch to an alternate model in this phase
+                        AlternateParticle = new ParticleDef // if blank it will use default, must be a default version for this to be useable. 
+                        {
+                            Name = "", 
+                            Offset = Vector(x: 0, y: 0, z: 0),
+                            DisableCameraCulling = true,// If not true will not cull when not in view of camera, be careful with this and only use if you know you need it
+                            Extras = new ParticleOptionDef
+                            {
+                                Scale = 1,
+                            },
+                        },
+                        StartParticle = new ParticleDef // Optional particle to play when this stage begins
+                        {
+                            Name = "",
+                            Offset = Vector(x: 0, y: 0, z: 0),
+                            DisableCameraCulling = true,// If not true will not cull when not in view of camera, be careful with this and only use if you know you need it
+                            Extras = new ParticleOptionDef
+                            {
+                                Scale = 1,
+                            },
+                        },
+                        AlternateSound = "BoosterStageSound" // if blank it will use default, must be a default version for this to be useable. 
+                    },
+                    new ApproachDef
+                    {
+                        Failure = Wait,
+                        OnFailureRevertTo = -1, // -1 to reset to BEFORE the for approach stage was activated.  First stage is 0, second is 1, etc...
+                        StartCondition1 = Lifetime,
+                        Start1Value = 0,
+                        StartCondition2 = Ignore, 
+                        Start2Value = 0,
+                        EndCondition1 = DistanceFromTarget,
+                        End1Value = 10,
+                        EndCondition2 = Ignore,
+                        End2Value = 0,
+                        UpDirection = RelativeToGravity,
+                        AdjustUpDir = true,
+                        VantagePoint = Surface, // Surface, Target, Shooter, MidPoint (between target and shooter)
+                        AdjustVantagePoint = false,
+                        AngleOffset = 0.5,
+                        LeadDistance = 5,
+                        PushLeadByTravelDistance = false,
+                        TrackingDistance = 10,
+                        DesiredElevation = 10,
+                        AdjustElevation = Target,
+                        AccelMulti = 1,
+                        SpeedCapMulti = 200,
+                        AdjustDestinationPosition = true,
+                        CanExpireOnceStarted = false,
+                        AlternateModel = "", // Define only if you want to switch to an alternate model in this phase
+                        AlternateParticle = new ParticleDef
+                        {
+                            Name = "",
+                            Offset = Vector(x: 0, y: 0, z: 0),
+                            DisableCameraCulling = true,
+                            Extras = new ParticleOptionDef
+                            {
+                                Scale = 1,
+                            },
+                        },
+                        StartParticle = new ParticleDef // Optional particle to play when this stage begins
+                        {
+                            Name = "",
+                            Offset = Vector(x: 0, y: 0, z: 0),
+                            DisableCameraCulling = true,// If not true will not cull when not in view of camera, be careful with this and only use if you know you need it
+                            Extras = new ParticleOptionDef
+                            {
+                                Scale = 1,
+                            },
+                        },
+                        AlternateSound = "BoosterStageSound"
+                    },
+                },*/
                 Mines = new MinesDef
                 {
                     DetectRadius = 200,
@@ -279,6 +416,23 @@ namespace Scripts
                 ModelName = "",
                 VisualProbability = 1f,
                 ShieldHitDraw = true,
+                Decals = new DecalDef
+                {
+                    MaxAge = 3600,
+                    Map = new[]
+                    {
+                        new TextureMapDef
+                        {
+                            HitMaterial = "Metal",
+                            DecalMaterial = "GunBullet",
+                        },
+                        new TextureMapDef
+                        {
+                            HitMaterial = "Glass",
+                            DecalMaterial = "GunBullet",
+                        },
+                    },
+                },
                 Particles = new AmmoParticleDef
                 {
                     Ammo = new ParticleDef
@@ -287,12 +441,9 @@ namespace Scripts
                         ShrinkByDistance = true,
                         Color = Color(red: 10, green: 20, blue: 25, alpha: 1.5f),
                         Offset = Vector(x: 0, y: -1, z: 0),
+                        DisableCameraCulling = true,// If not true will not cull when not in view of camera, be careful with this and only use if you know you need it
                         Extras = new ParticleOptionDef
                         {
-                            Loop = false,
-                            Restart = false,
-                            MaxDistance = 200,
-                            MaxDuration = 1,
                             Scale = 0.4f,
                         },
                     },
@@ -300,16 +451,24 @@ namespace Scripts
                     {
                         Name = "EnergyBlast",
                         ApplyToShield = true,
-                        ShrinkByDistance = false,
                         Color = Color(red: 8, green: 8, blue: 15, alpha: 2),
                         Offset = Vector(x: 0, y: 0, z: 0),
+                        DisableCameraCulling = true, // If not true will not cull when not in view of camera, be careful with this and only use if you know you need it
                         Extras = new ParticleOptionDef
                         {
-                            Loop = false,
-                            Restart = false,
-                            MaxDistance = 2000,
-                            MaxDuration = 1,
                             Scale = 2,
+                            HitPlayChance = 1f,
+                        },
+                    },
+                    Eject = new ParticleDef
+                    {
+                        Name = "",
+                        ApplyToShield = true,
+                        Offset = Vector(x: 0, y: 0, z: 0),
+                        DisableCameraCulling = true, // If not true will not cull when not in view of camera, be careful with this and only use if you know you need it
+                        Extras = new ParticleOptionDef
+                        {
+                            Scale = 1,
                             HitPlayChance = 1f,
                         },
                     },

@@ -223,7 +223,7 @@ namespace Scripts
                 public struct MountPointDef
                 {
                     [ProtoMember(1)] internal string SubtypeId;
-                    [ProtoMember(2)] internal string SpinPartId; 
+                    [ProtoMember(2)] internal string SpinPartId;
                     [ProtoMember(3)] internal string MuzzlePartId;
                     [ProtoMember(4)] internal string AzimuthPartId;
                     [ProtoMember(5)] internal string ElevationPartId;
@@ -438,6 +438,9 @@ namespace Scripts
                     [ProtoMember(18)] internal bool SpinFree;
                     [ProtoMember(19)] internal bool StayCharged;
                     [ProtoMember(20)] internal int MagsToLoad;
+                    [ProtoMember(21)] internal int MaxActiveProjectiles;
+                    [ProtoMember(22)] internal int MaxReloads;
+
                 }
 
 
@@ -461,6 +464,7 @@ namespace Scripts
                     [ProtoMember(5)] internal bool LockOnFocus;
                     [ProtoMember(6)] internal bool SuppressFire;
                     [ProtoMember(7)] internal bool OverrideLeads;
+                    [ProtoMember(8)] internal int DefaultLeadGroup;
                 }
 
                 [ProtoContract]
@@ -483,8 +487,8 @@ namespace Scripts
                     [ProtoMember(8)] internal int MinElevation;
                     [ProtoMember(9)] internal float InventorySize;
                     [ProtoMember(10)] internal HardwareType Type;
-					[ProtoMember(11)] internal int HomeAzimuth;
-					[ProtoMember(12)] internal int HomeElevation;
+                    [ProtoMember(11)] internal int HomeAzimuth;
+                    [ProtoMember(12)] internal int HomeElevation;
                     [ProtoMember(13)] internal CriticalDef CriticalReaction;
                     [ProtoMember(14)] internal float IdlePower;
 
@@ -510,6 +514,7 @@ namespace Scripts
                     [ProtoMember(6)] internal bool FiringSoundPerShot;
                     [ProtoMember(7)] internal string PreFiringSound;
                     [ProtoMember(8)] internal uint FireSoundEndDelay;
+                    [ProtoMember(9)] internal bool FireSoundNoBurst;
                 }
 
                 [ProtoContract]
@@ -562,6 +567,8 @@ namespace Scripts
                 [ProtoMember(24)] internal AreaOfDamageDef AreaOfDamage;
                 [ProtoMember(25)] internal EwarDef Ewar;
                 [ProtoMember(26)] internal bool IgnoreVoxels;
+                [ProtoMember(27)] internal bool Synchronize;
+                [ProtoMember(28)] internal double HeatModifier;
 
                 [ProtoContract]
                 public struct DamageScaleDef
@@ -579,6 +586,7 @@ namespace Scripts
                     [ProtoMember(10)] internal double HealthHitModifier;
                     [ProtoMember(11)] internal double VoxelHitModifier;
                     [ProtoMember(12)] internal DamageTypes DamageType;
+                    [ProtoMember(13)] internal DeformDef Deform;
 
                     [ProtoContract]
                     public struct FallOffDef
@@ -649,6 +657,20 @@ namespace Scripts
                         [ProtoMember(2)] internal ShieldType Type;
                         [ProtoMember(3)] internal float BypassModifier;
                     }
+
+                    [ProtoContract]
+                    public struct DeformDef
+                    {
+                        internal enum DeformTypes
+                        {
+                            HitBlock,
+                            AllDamagedBlocks,
+                            NoDeform,
+                        }
+
+                        [ProtoMember(1)] internal DeformTypes DeformType;
+                        [ProtoMember(2)] internal int DeformDelay;
+                    }
                 }
 
                 [ProtoContract]
@@ -687,6 +709,7 @@ namespace Scripts
                     [ProtoMember(3)] internal string ModelName;
                     [ProtoMember(4)] internal AmmoParticleDef Particles;
                     [ProtoMember(5)] internal LineDef Lines;
+                    [ProtoMember(6)] internal DecalDef Decals;
 
                     [ProtoContract]
                     public struct AmmoParticleDef
@@ -769,6 +792,21 @@ namespace Scripts
 
                         }
                     }
+
+                    [ProtoContract]
+                    public struct DecalDef
+                    {
+
+                        [ProtoMember(1)] internal int MaxAge;
+                        [ProtoMember(2)] internal TextureMapDef[] Map;
+
+                        [ProtoContract]
+                        public struct TextureMapDef
+                        {
+                            [ProtoMember(1)] internal string HitMaterial;
+                            [ProtoMember(2)] internal string DecalMaterial;
+                        }
+                    }
                 }
 
                 [ProtoContract]
@@ -786,19 +824,53 @@ namespace Scripts
                 {
                     [ProtoMember(1)] internal string AmmoRound;
                     [ProtoMember(2)] internal int Fragments;
-                    [ProtoMember(3)] internal float ForwardDegrees;
+                    [ProtoMember(3)] internal float Radial;
                     [ProtoMember(4)] internal float BackwardDegrees;
                     [ProtoMember(5)] internal float Degrees;
                     [ProtoMember(6)] internal bool Reverse;
-                    [ProtoMember(7)] internal bool RandomizeDir;
+                    [ProtoMember(7)] internal bool IgnoreArming;
                     [ProtoMember(8)] internal bool DropVelocity;
                     [ProtoMember(9)] internal float Offset;
-                    [ProtoMember(10)] internal float Radial;
+                    [ProtoMember(10)] internal int MaxChildren;
+                    [ProtoMember(11)] internal TimedSpawnDef TimedSpawns;
+                    [ProtoMember(12)] internal bool FireSound; // not used, can remove
+                    [ProtoMember(13)] internal Vector3D AdvOffset;
+
+                    [ProtoContract]
+                    public struct TimedSpawnDef
+                    {
+                        public enum PointTypes
+                        {
+                            Direct,
+                            Lead,
+                            Predict,
+                        }
+
+                        [ProtoMember(1)] internal bool Enable;
+                        [ProtoMember(2)] internal int Interval;
+                        [ProtoMember(3)] internal int StartTime;
+                        [ProtoMember(4)] internal int MaxSpawns;
+                        [ProtoMember(5)] internal double Proximity;
+                        [ProtoMember(6)] internal bool ParentDies;
+                        [ProtoMember(7)] internal bool PointAtTarget;
+                        [ProtoMember(8)] internal int GroupSize;
+                        [ProtoMember(9)] internal int GroupDelay;
+                        [ProtoMember(10)] internal PointTypes PointType;
+                        [ProtoMember(11)] internal float DirectAimCone;
+                    }
                 }
 
                 [ProtoContract]
                 public struct PatternDef
                 {
+                    public enum PatternModes
+                    {
+                        Never,
+                        Weapon,
+                        Fragment,
+                        Both,
+                    }
+
                     [ProtoMember(1)] internal string[] Patterns;
                     [ProtoMember(2)] internal bool Enable;
                     [ProtoMember(3)] internal float TriggerChance;
@@ -807,6 +879,7 @@ namespace Scripts
                     [ProtoMember(6)] internal int RandomMin;
                     [ProtoMember(7)] internal int RandomMax;
                     [ProtoMember(8)] internal int PatternSteps;
+                    [ProtoMember(9)] internal PatternModes Mode;
                 }
 
                 [ProtoContract]
@@ -843,6 +916,7 @@ namespace Scripts
                         InvCurve,
                         Squeeze,
                         Pooled,
+                        Exponential,
                     }
                     public enum AoeShape
                     {
@@ -1072,6 +1146,7 @@ namespace Scripts
                     [ProtoMember(6)] internal string PlayerHitSound;
                     [ProtoMember(7)] internal string FloatingHitSound;
                     [ProtoMember(8)] internal string ShieldHitSound;
+                    [ProtoMember(9)] internal string ShotSound;
                 }
 
                 [ProtoContract]
@@ -1086,6 +1161,7 @@ namespace Scripts
                         DetectTravelTo,
                         DetectSmart,
                         DetectFixed,
+                        DroneAdvanced,
                     }
 
                     [ProtoMember(1)] internal float MaxTrajectory;
@@ -1094,7 +1170,7 @@ namespace Scripts
                     [ProtoMember(4)] internal float TargetLossDegree;
                     [ProtoMember(5)] internal int TargetLossTime;
                     [ProtoMember(6)] internal int MaxLifeTime;
-                    [ProtoMember(7)] internal int FieldTime;
+                    [ProtoMember(7)] internal int DeaccelTime;
                     [ProtoMember(8)] internal Randomize SpeedVariance;
                     [ProtoMember(9)] internal Randomize RangeVariance;
                     [ProtoMember(10)] internal GuidanceType Guidance;
@@ -1102,6 +1178,7 @@ namespace Scripts
                     [ProtoMember(12)] internal MinesDef Mines;
                     [ProtoMember(13)] internal float GravityMultiplier;
                     [ProtoMember(14)] internal uint MaxTrajectoryTime;
+                    [ProtoMember(15)] internal ApproachDef[] Approaches;
 
                     [ProtoContract]
                     public struct SmartsDef
@@ -1118,7 +1195,79 @@ namespace Scripts
                         [ProtoMember(10)] internal bool KeepAliveAfterTargetLoss;
                         [ProtoMember(11)] internal float OffsetRatio;
                         [ProtoMember(12)] internal int OffsetTime;
+                        [ProtoMember(13)] internal bool CheckFutureIntersection;
+                        [ProtoMember(14)] internal double NavAcceleration;
+                        [ProtoMember(15)] internal bool AccelClearance;
                     }
+
+                    [ProtoContract]
+                    public struct ApproachDef
+                    {
+                        public enum StartFailure
+                        {
+                            Wait,
+                            MoveToPrevious,
+                            MoveToNext,
+                            ForceReset,
+                        }
+
+                        public enum Conditions
+                        {
+                            Ignore,
+                            Spawn,
+                            DistanceFromTarget,
+                            Lifetime,
+                            DesiredElevation,
+                            MinTravelRequired
+                        }
+
+                        public enum UpRelativeTo
+                        {
+                            RelativeToBlock,
+                            RelativeToGravity,
+                            TargetDirection,
+                            TargetVelocity,
+                        }
+
+                        public enum VantagePointRelativeTo
+                        {
+                            Origin,
+                            Shooter,
+                            Target,
+                            Surface,
+                            MidPoint,
+                        }
+
+                        [ProtoMember(1)] internal StartFailure Failure;
+                        [ProtoMember(2)] internal Conditions StartCondition1;
+                        [ProtoMember(3)] internal Conditions EndCondition1;
+                        [ProtoMember(4)] internal UpRelativeTo UpDirection;
+                        [ProtoMember(5)] internal VantagePointRelativeTo VantagePoint;
+                        [ProtoMember(6)] internal double AngleOffset;
+                        [ProtoMember(7)] internal double Start1Value;
+                        [ProtoMember(8)] internal double End1Value;
+                        [ProtoMember(9)] internal double LeadDistance;
+                        [ProtoMember(10)] internal double DesiredElevation;
+                        [ProtoMember(11)] internal double AccelMulti;
+                        [ProtoMember(12)] internal double SpeedCapMulti;
+                        [ProtoMember(13)] internal bool AdjustDestinationPosition;
+                        [ProtoMember(14)] internal bool CanExpireOnceStarted;
+                        [ProtoMember(15)] internal ParticleDef AlternateParticle;
+                        [ProtoMember(16)] internal string AlternateSound;
+                        [ProtoMember(17)] internal string AlternateModel;
+                        [ProtoMember(18)] internal int OnFailureRevertTo;
+                        [ProtoMember(19)] internal ParticleDef StartParticle;
+                        [ProtoMember(20)] internal bool AdjustVantagePoint;
+                        [ProtoMember(21)] internal bool AdjustUpDir;
+                        [ProtoMember(22)] internal bool PushLeadByTravelDistance;
+                        [ProtoMember(23)] internal double TrackingDistance;
+                        [ProtoMember(24)] internal Conditions StartCondition2;
+                        [ProtoMember(25)] internal double Start2Value;
+                        [ProtoMember(26)] internal Conditions EndCondition2;
+                        [ProtoMember(27)] internal double End2Value;
+                        [ProtoMember(28)] internal VantagePointRelativeTo AdjustElevation;
+                    }
+
 
                     [ProtoContract]
                     public struct MinesDef
@@ -1159,7 +1308,7 @@ namespace Scripts
                 [ProtoMember(3)] internal Vector3D Offset;
                 [ProtoMember(4)] internal ParticleOptionDef Extras;
                 [ProtoMember(5)] internal bool ApplyToShield;
-                [ProtoMember(6)] internal bool ShrinkByDistance;
+                [ProtoMember(6)] internal bool DisableCameraCulling;
             }
         }
     }
