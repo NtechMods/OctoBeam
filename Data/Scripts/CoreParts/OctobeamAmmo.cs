@@ -70,9 +70,7 @@ namespace Scripts
                 Fragments = 1,
                 Degrees = 0,
                 Reverse = false,
-                RandomizeDir = false, // randomize between forward and backward directions
                 DropVelocity = false, // fragments will not inherit velocity from parent.
-                Offset = 0f, // Offsets the fragment spawn by this amount, in meters (positive forward, negative for backwards).
                 Offset = 0f, // Offsets the fragment spawn by this amount, in meters (positive forward, negative for backwards), value is read from parent ammo type.
                 Radial = 0f, // Determines starting angle for Degrees of spread above.  IE, 0 degrees and 90 radial goes perpendicular to travel path
                 MaxChildren = 0, // number of maximum branches for fragments from the roots point of view, 0 is unlimited
@@ -152,7 +150,7 @@ namespace Scripts
                 },
                 Custom = new CustomScalesDef
                 {
-                    IgnoreAllOthers = false,
+                    SkipOthers = NoSkip, // Controls how projectile interacts with other blocks in relation to those defined here, NoSkip, Exclusive, Inclusive.
                     Types = new[]
                     {
                         new CustomBlocksDef
@@ -278,7 +276,6 @@ namespace Scripts
                 AccelPerSec = 0f,
                 DesiredSpeed = 0,
                 MaxTrajectory = 3000,
-                FieldTime = 0, // 0 is disabled, a value causes the projectile to come to rest, spawn a field and remain for a time (Measured in game ticks, 60 = 1 second)
                 GravityMultiplier = 0f, // Gravity multiplier, influences the trajectory of the projectile, value greater than 0 to enable.
                 SpeedVariance = Random(start: 0, end: 0), // subtracts value from DesiredSpeed
                 RangeVariance = Random(start: 0, end: 0), // subtracts value from MaxTrajectory
@@ -416,7 +413,7 @@ namespace Scripts
                 ModelName = "",
                 VisualProbability = 1f,
                 ShieldHitDraw = true,
-                Decals = new DecalDef
+                /* Decals = new DecalDef
                 {
                     MaxAge = 3600,
                     Map = new[]
@@ -432,14 +429,13 @@ namespace Scripts
                             DecalMaterial = "GunBullet",
                         },
                     },
-                },
+                },*/
                 Particles = new AmmoParticleDef
                 {
                     Ammo = new ParticleDef
                     {
                         Name = "", //ShipWelderArc
-                        ShrinkByDistance = true,
-                        Color = Color(red: 10, green: 20, blue: 25, alpha: 1.5f),
+                        Color = Color(red: .5f, green: .5f, blue: 1, alpha: 1.5f),
                         Offset = Vector(x: 0, y: -1, z: 0),
                         DisableCameraCulling = true,// If not true will not cull when not in view of camera, be careful with this and only use if you know you need it
                         Extras = new ParticleOptionDef
@@ -475,14 +471,14 @@ namespace Scripts
                 },
                 Lines = new LineDef
                 {
-                    ColorVariance = Random(start: 0.005f, end: 10f), // multiply the color by random values within range.
-                    WidthVariance = Random(start: 0f, end: 0.025f), // adds random value to default width (negatives shrinks width)
+                    ColorVariance = Random(start: 0.005f, end: 7f), // multiply the color by random values within range.
+                    WidthVariance = Random(start: 0f, end: 0.065f), // adds random value to default width (negatives shrinks width)
                     Tracer = new TracerBaseDef
                     {
                         Enable = true,
                         Length = 1f,
-                        Width = 0.05f,
-                        Color = Color(red: 8, green: 8, blue: 15, alpha: 12),
+                        Width = 0.29f,
+                        Color = Color(red: 0.5f, green: 0.5f, blue: 1.5f, alpha: 0.8f),
                         VisualFadeStart = 0, // Number of ticks the weapon has been firing before projectiles begin to fade their color
                         VisualFadeEnd = 240, // How many ticks after fade began before it will be invisible.
                         Textures = new[] {// WeaponLaser, ProjectileTrailLine, WarpBubble, etc..
@@ -514,7 +510,7 @@ namespace Scripts
                         },
                         TextureMode = Normal,
                         DecayTime = 120,
-                        Color = Color(red: 8, green: 8, blue: 15, alpha: 6),
+                        Color = Color(red: 0.2f, green: 0.2f, blue: 1, alpha: 0.5f),
                         Back = false,
                         CustomWidth = 0f,
                         UseWidthVariance = false,

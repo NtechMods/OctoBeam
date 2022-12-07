@@ -161,7 +161,7 @@ namespace Scripts
                     Effect1 = new ParticleDef
                     {
                         Name = "EnergyBlast",//Muzzle_Flash_Large
-                        Color = Color(red: 8, green: 8, blue: 15, alpha: 12),
+                        Color = Color(red: 0.2f, green: 0.2f, blue: 1, alpha: 1),
                         Offset = Vector(x: 0, y: 0, z: 0),
 
                         Extras = new ParticleOptionDef
