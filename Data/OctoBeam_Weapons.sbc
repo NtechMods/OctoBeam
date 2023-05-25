@@ -18,21 +18,4 @@
       <ReloadTime>0</ReloadTime>
     </Weapon>
   </Weapons>
-  <Blueprints>   
-   <Blueprint>
-      <Id>
-        <TypeId>BlueprintDefinition</TypeId>
-        <SubtypeId>OctoAmmo</SubtypeId>
-      </Id>
-      <DisplayName>Blank Ammo for Lasers</DisplayName>
-      <Icon>Textures\GUI\Icons\ammo\DeURounds.dds</Icon>
-      <Prerequisites>
-        <Item Amount="1" TypeId="Ingot" SubtypeId="Magnesium" />
-		<Item Amount="1" TypeId="Ingot" SubtypeId="Nickel" />
-		<Item Amount="1" TypeId="Ingot" SubtypeId="Uranium" />
-      </Prerequisites>
-      <Result Amount="1" TypeId="AmmoMagazine" SubtypeId="Energy" />
-      <BaseProductionTimeInSeconds>60</BaseProductionTimeInSeconds>
-    </Blueprint>
-  </Blueprints>
 </Definitions>

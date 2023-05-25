@@ -4,7 +4,7 @@
     <AmmoMagazine>
       <Id>
         <TypeId>AmmoMagazine</TypeId>
-        <SubtypeId>OctoBeams</SubtypeId>
+        <SubtypeId>Energy</SubtypeId>
       </Id>
       <DisplayName>Octobeamconduit</DisplayName>
       <Icon>Textures\GUI\Icons\component\BatteryComponent.dds</Icon>
@@ -16,8 +16,8 @@
       <Mass>1</Mass>
       <Volume>1</Volume>
       <Model>Models\Components\PowerCellComponent.mwm</Model>
-      <Capacity>10000</Capacity>
-      <AmmoDefinitionId Subtype="Blank" />
+      <Capacity>1</Capacity>
+      <AmmoDefinitionId Subtype="GreenBeam" />
     </AmmoMagazine>
   </AmmoMagazines>
 </Definitions>
