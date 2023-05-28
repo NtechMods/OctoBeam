@@ -22,12 +22,6 @@
                 <X>1</X>
                 <Y>1</Y>
             </UVSize>
-            <Color>
-                <X>0.00</X>
-                <Y>2.73</Y>
-                <Z>0.00</Z>
-                <W>11.8</W>
-            </Color>
         </TransparentMaterial>
         <TransparentMaterial>
             <Id>
@@ -49,12 +43,6 @@
                 <X>1</X>
                 <Y>1</Y>
             </UVSize>
-            <Color>
-                <X>2.73</X>
-                <Y>0.00</Y>
-                <Z>0.00</Z>
-                <W>11.8</W>
-            </Color>
         </TransparentMaterial>
         <TransparentMaterial>
             <Id>
@@ -76,12 +64,6 @@
                 <X>1</X>
                 <Y>1</Y>
             </UVSize>
-            <Color>
-                <X>0.00</X>
-                <Y>0.00</Y>
-                <Z>2.73</Z>
-                <W>11.8</W>
-            </Color>
         </TransparentMaterial>
   </TransparentMaterials>
 </Definitions>

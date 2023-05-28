@@ -171,16 +171,16 @@ namespace Scripts
                     BarrelsPerShot = 8,
                     TrajectilesPerBarrel = 1, // Number of Trajectiles per barrel per fire event.
                     SkipBarrels = 0,
-                    ReloadTime = 0, // Measured in game ticks (6 = 100ms, 60 = 1 seconds, etc..).
-                    MagsToLoad = 0, // Number of physical magazines to consume on reload.
+                    ReloadTime = 1, // Measured in game ticks (6 = 100ms, 60 = 1 seconds, etc..).
+                    MagsToLoad = 5, // Number of physical magazines to consume on reload.
                     DelayUntilFire = 0, // Measured in game ticks (6 = 100ms, 60 = 1 seconds, etc..).
                     HeatPerShot = 18, //heat generated per shot
                     MaxHeat = 70000, //max heat before weapon enters cooldown (70% of max heat)
                     Cooldown = .50f, //percent of max heat to be under to start firing again after overheat accepts .2-.95
                     HeatSinkRate = 6000, //amount of heat lost per second
                     DegradeRof = false, // progressively lower rate of fire after 80% heat threshold (80% of max heat)
-                    ShotsInBurst = 3600,
-                    DelayAfterBurst = 1, // Measured in game ticks (6 = 100ms, 60 = 1 seconds, etc..).
+                    ShotsInBurst = 0,
+                    DelayAfterBurst = 0, // Measured in game ticks (6 = 100ms, 60 = 1 seconds, etc..).
                     FireFull = false,
                     GiveUpAfter = false,
                     BarrelSpinRate = 20, // Visual only, 0 disables and uses RateOfFire.
@@ -221,9 +221,14 @@ namespace Scripts
             },
             Ammos = new [] {
                 
-                BlueBeam,
-                GreenBeam,
-                RedBeam,
+                Blue,
+                Green,
+                Red,
+                White,
+                Orange,
+                Teal,
+                Yellow,
+                Purple,
             },
 
             //Animations = None,
