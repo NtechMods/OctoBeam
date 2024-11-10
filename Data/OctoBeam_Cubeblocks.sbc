@@ -180,7 +180,7 @@
             <Name>OctoBeamLaser</Name>
             <Position>
                 <X>9</X>
-                <Y>10</Y>
+                <Y>24</Y>
             </Position>
         </BlockPosition>
     </BlockPositions>
